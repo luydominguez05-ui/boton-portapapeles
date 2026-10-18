@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Botón copiar</title>
+<style>
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: inline-block;
+}
+
+.wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 2px;
+}
+
+#copy-button {
+  width: 64px;
+  height: 64px;
+  border: 0;
+  border-radius: 16px;
+  background: #222721;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px #22272120;
+  transition: transform .18s ease;
+}
+
+#copy-button:hover {
+  transform: translateY(-2px);
+}
+
+#copy-button:active {
+  transform: scale(.97);
+}
+
+#status {
+  min-height: 14px;
+  font-size: 12px;
+  color: #72776e;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <button id="copy-button" type="button"
+          aria-label="Copiar círculo rojo">🔴</button>
+  <span id="status" role="status" aria-live="polite"></span>
+</div>
+
+<script>
+const button = document.getElementById('copy-button');
+const status = document.getElementById('status');
+
+button.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText('🔴');
+    button.textContent = '✓';
+    status.textContent = '¡Copiado!';
+
+    setTimeout(() => {
+      button.textContent = '🔴';
+      status.textContent = '';
+    }, 1800);
+  } catch (error) {
+    status.textContent = 'No se pudo copiar.';
+  }
+});
+</script>
+</body>
+</html>
